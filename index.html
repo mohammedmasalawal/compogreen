@@ -113,6 +113,65 @@
 
         footer { background: var(--brown); color: var(--white); text-align: center; padding: 20px; margin-top: 40px; }
 
+        /* --- Shopping Cart Modal Styles --- */
+        .cart-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .cart-modal {
+            background: var(--white); width: 90%; max-width: 500px; border-radius: 10px;
+            padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            max-height: 80vh; display: flex; flex-direction: column;
+        }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-earthy); padding-bottom: 10px; margin-bottom: 15px;}
+        .close-cart { font-size: 24px; cursor: pointer; color: var(--brown); }
+        .cart-items { overflow-y: auto; flex-grow: 1; margin-bottom: 15px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .cart-item-details { flex-grow: 1; margin-right: 15px; }
+        .cart-item-title { font-weight: 600; color: var(--primary-green); }
+        .remove-btn { color: red; cursor: pointer; border: none; background: none; font-size: 0.9rem; margin-top: 5px; text-decoration: underline; }
+        .cart-summary { border-top: 2px solid var(--bg-earthy); padding-top: 15px; text-align: right; }
+        .cart-total { font-size: 1.5rem; font-weight: bold; color: var(--brown); margin-bottom: 15px; }
+        .empty-cart-msg { text-align: center; color: #777; padding: 20px 0; font-style: italic; }
+
+        /* --- Checkout Modal Styles --- */
+        .checkout-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .checkout-modal {
+            background: var(--white); width: 90%; max-width: 500px; border-radius: 10px;
+            padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column;
+        }
+        .checkout-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-earthy); padding-bottom: 10px; margin-bottom: 15px;}
+        .close-checkout { font-size: 24px; cursor: pointer; color: var(--brown); }
+        .checkout-body form { display: flex; flex-direction: column; gap: 12px; }
+        .checkout-body input, .checkout-body textarea { padding: 12px; border: 1px solid var(--secondary-green); border-radius: 5px; font-family: inherit; width: 100%; }
+        .input-group { display: flex; gap: 10px; }
+        .payment-methods { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
+        .payment-methods label { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; }
+        .payment-methods label:hover { background: var(--bg-earthy); border-color: var(--secondary-green); }
+        .checkout-summary { margin-top: 15px; font-size: 1.2rem; border-top: 2px solid var(--bg-earthy); padding-top: 15px; text-align: right; }
+
+        /* --- Custom Toast Notification Styles --- */
+        #toast-container {
+            position: fixed; bottom: 20px; left: 20px; z-index: 3000;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            background-color: var(--primary-green); color: var(--white);
+            padding: 15px 25px; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; align-items: center; gap: 10px; font-weight: 600;
+            animation: slideIn 0.3s ease-out forwards, fadeOut 0.5s ease-out 2.5s forwards;
+            opacity: 0; transform: translateX(-100%);
+        }
+        .toast i { color: var(--secondary-green); font-size: 1.2rem; }
+        
+        @keyframes slideIn { to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
         /* --- Chat Widget --- */
         .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         .chat-btn { 
@@ -141,49 +200,11 @@
         .chat-input input { flex: 1; padding: 10px; border: none; outline: none; }
         .chat-input button { padding: 10px; background: var(--primary-green); color: white; border: none; cursor: pointer; }
 
-        /* --- Shopping Cart Modal Styles --- */
-        .cart-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
-        }
-        .cart-modal {
-            background: var(--white); width: 90%; max-width: 500px; border-radius: 10px;
-            padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-            max-height: 80vh; display: flex; flex-direction: column;
-        }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-earthy); padding-bottom: 10px; margin-bottom: 15px;}
-        .close-cart { font-size: 24px; cursor: pointer; color: var(--brown); }
-        .cart-items { overflow-y: auto; flex-grow: 1; margin-bottom: 15px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
-        .cart-item-details { flex-grow: 1; margin-right: 15px; }
-        .cart-item-title { font-weight: 600; color: var(--primary-green); }
-        .remove-btn { color: red; cursor: pointer; border: none; background: none; font-size: 0.9rem; margin-top: 5px; text-decoration: underline; }
-        .cart-summary { border-top: 2px solid var(--bg-earthy); padding-top: 15px; text-align: right; }
-        .cart-total { font-size: 1.5rem; font-weight: bold; color: var(--brown); margin-bottom: 15px; }
-        .empty-cart-msg { text-align: center; color: #777; padding: 20px 0; font-style: italic; }
-
-        /* --- Custom Toast Notification Styles --- */
-        #toast-container {
-            position: fixed; bottom: 20px; left: 20px; z-index: 3000;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .toast {
-            background-color: var(--primary-green); color: var(--white);
-            padding: 15px 25px; border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex; align-items: center; gap: 10px; font-weight: 600;
-            animation: slideIn 0.3s ease-out forwards, fadeOut 0.5s ease-out 2.5s forwards;
-            opacity: 0; transform: translateX(-100%);
-        }
-        .toast i { color: var(--secondary-green); font-size: 1.2rem; }
-        
-        @keyframes slideIn { to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links a.hide-mobile { display: none; }
             .hero h1 { font-size: 2.5rem; }
+            .input-group { flex-direction: column; }
         }
     </style>
 </head>
@@ -356,7 +377,42 @@
             </div>
             <div class="cart-summary">
                 <div class="cart-total">Total: <span id="cartTotal">₹0</span></div>
-                <button class="btn" style="width: 100%;" onclick="showToast('Proceeding to Checkout Demo!')">Proceed to Checkout</button>
+                <button class="btn" style="width: 100%;" onclick="openCheckout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout-overlay" id="checkoutOverlay">
+        <div class="checkout-modal">
+            <div class="checkout-header">
+                <h2>Secure Checkout</h2>
+                <span class="close-checkout" onclick="toggleCheckoutModal()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <div class="checkout-body">
+                <form id="checkoutForm" onsubmit="handleCheckout(event)">
+                    <h3 style="font-size: 1.1rem;">Shipping Details</h3>
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="tel" placeholder="Mobile Number (10 Digits)" pattern="[0-9]{10}" required>
+                    <textarea placeholder="Full Delivery Address" rows="3" required></textarea>
+                    
+                    <div class="input-group">
+                        <input type="text" placeholder="City" required>
+                        <input type="text" placeholder="Pincode" required>
+                    </div>
+                    
+                    <h3 style="font-size: 1.1rem; margin-top: 10px;">Payment Method</h3>
+                    <div class="payment-methods">
+                        <label><input type="radio" name="payment" value="UPI" required> <i class="fa-brands fa-google-pay" style="color:#2E7D32;"></i> UPI / QR Code</label>
+                        <label><input type="radio" name="payment" value="Card" required> <i class="fa-regular fa-credit-card" style="color:#2E7D32;"></i> Credit / Debit Card</label>
+                        <label><input type="radio" name="payment" value="COD" required> <i class="fa-solid fa-money-bill-wave" style="color:#2E7D32;"></i> Cash on Delivery</label>
+                    </div>
+                    
+                    <div class="checkout-summary">
+                        <p>Amount to Pay: <strong id="checkoutTotalAmount">₹0</strong></p>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Place Order</button>
+                </form>
             </div>
         </div>
     </div>
@@ -408,7 +464,6 @@
         function addToCart(productName, price, qtyId) {
             const qty = parseInt(document.getElementById(qtyId).value);
             if (qty > 0) {
-                // Check if item already exists in cart
                 const existingItem = cart.find(item => item.name === productName);
                 if (existingItem) {
                     existingItem.qty += qty;
@@ -461,6 +516,41 @@
         function toggleCartModal() {
             const modal = document.getElementById('cartOverlay');
             modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // --- Checkout Modal Logic (NEW) ---
+        function toggleCheckoutModal() {
+            const modal = document.getElementById('checkoutOverlay');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function openCheckout() {
+            if (cart.length === 0) {
+                showToast("Your cart is empty! Add some compost first.");
+                return;
+            }
+            // Close Cart and Open Checkout
+            toggleCartModal();
+            // Update Checkout Total Amount
+            document.getElementById('checkoutTotalAmount').innerText = document.getElementById('cartTotal').innerText;
+            toggleCheckoutModal();
+        }
+
+        function handleCheckout(event) {
+            event.preventDefault(); // Prevents the page from reloading
+            
+            // Close Checkout Modal
+            toggleCheckoutModal();
+            
+            // Empty the cart
+            cart = [];
+            updateCartUI();
+            
+            // Show Success Notification
+            showToast("Order Placed Successfully! Thank you! 🌿");
+            
+            // Reset the form fields for next time
+            document.getElementById('checkoutForm').reset();
         }
 
         // --- Chat Widget Logic ---
