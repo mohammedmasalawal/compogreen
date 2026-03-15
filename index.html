@@ -9,11 +9,10 @@
     <style>
         /* --- Color Palette & Variables --- */
         :root {
-            --primary-green: #2E7D32; /* Dark Forest Green */
-            --secondary-green: #81C784; /* Light Leaf Green */
-            --brown: #5D4037; /* Earthy Soil Brown */
-            --light-brown: #8D6E63;
-            --bg-earthy: #F1F8E9; /* Very light green/earthy background */
+            --primary-green: #2E7D32;
+            --secondary-green: #81C784;
+            --brown: #5D4037;
+            --bg-earthy: #F1F8E9;
             --white: #FFFFFF;
             --text-dark: #333333;
         }
@@ -45,11 +44,20 @@
         }
         .logo-container { display: flex; align-items: center; gap: 10px; }
         
-        /* Updated to make logo circular */
+        /* Circular Logo Styles */
         .logo-img { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; } 
         .logo-text { font-size: 24px; font-weight: 700; color: var(--primary-green); }
-        .nav-links { display: flex; gap: 20px; }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-links a:hover { color: var(--secondary-green); }
+
+        /* Cart Badge in Nav */
+        .cart-nav-btn { position: relative; cursor: pointer; font-weight: 600; color: var(--primary-green); display: flex; align-items: center; gap: 5px;}
+        .cart-badge {
+            background-color: var(--brown); color: white;
+            border-radius: 50%; padding: 2px 7px; font-size: 0.8rem;
+            position: absolute; top: -10px; right: -15px;
+        }
 
         /* --- Hero Section --- */
         .hero {
@@ -58,14 +66,11 @@
             height: 80vh; display: flex; align-items: center; justify-content: center;
             text-align: center; color: var(--white); position: relative; overflow: hidden;
         }
-        
-        /* Updated to make hero logo circular */
+        /* Circular Hero Logo */
         .hero-logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; animation: growUp 1s ease-out; }
-        
         .hero h1 { color: var(--white); font-size: 3.5rem; animation: growUp 1.5s ease-out; }
         .hero p { font-size: 1.2rem; margin-bottom: 30px; animation: growUp 2s ease-out; }
         
-        /* Eco Animation */
         @keyframes growUp {
             0% { transform: translateY(50px) scale(0.9); opacity: 0; }
             100% { transform: translateY(0) scale(1); opacity: 1; }
@@ -106,10 +111,9 @@
         .helpline p { font-size: 1.1rem; }
         .helpline i { color: var(--primary-green); margin-right: 10px; }
 
-        /* --- Footer --- */
         footer { background: var(--brown); color: var(--white); text-align: center; padding: 20px; margin-top: 40px; }
 
-        /* --- Live Chat Widget --- */
+        /* --- Chat Widget --- */
         .chat-widget { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
         .chat-btn { 
             background: var(--primary-green); color: white; width: 60px; height: 60px; 
@@ -137,9 +141,48 @@
         .chat-input input { flex: 1; padding: 10px; border: none; outline: none; }
         .chat-input button { padding: 10px; background: var(--primary-green); color: white; border: none; cursor: pointer; }
 
+        /* --- Shopping Cart Modal Styles --- */
+        .cart-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .cart-modal {
+            background: var(--white); width: 90%; max-width: 500px; border-radius: 10px;
+            padding: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            max-height: 80vh; display: flex; flex-direction: column;
+        }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-earthy); padding-bottom: 10px; margin-bottom: 15px;}
+        .close-cart { font-size: 24px; cursor: pointer; color: var(--brown); }
+        .cart-items { overflow-y: auto; flex-grow: 1; margin-bottom: 15px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .cart-item-details { flex-grow: 1; margin-right: 15px; }
+        .cart-item-title { font-weight: 600; color: var(--primary-green); }
+        .remove-btn { color: red; cursor: pointer; border: none; background: none; font-size: 0.9rem; margin-top: 5px; text-decoration: underline; }
+        .cart-summary { border-top: 2px solid var(--bg-earthy); padding-top: 15px; text-align: right; }
+        .cart-total { font-size: 1.5rem; font-weight: bold; color: var(--brown); margin-bottom: 15px; }
+        .empty-cart-msg { text-align: center; color: #777; padding: 20px 0; font-style: italic; }
+
+        /* --- Custom Toast Notification Styles --- */
+        #toast-container {
+            position: fixed; bottom: 20px; left: 20px; z-index: 3000;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .toast {
+            background-color: var(--primary-green); color: var(--white);
+            padding: 15px 25px; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; align-items: center; gap: 10px; font-weight: 600;
+            animation: slideIn 0.3s ease-out forwards, fadeOut 0.5s ease-out 2.5s forwards;
+            opacity: 0; transform: translateX(-100%);
+        }
+        .toast i { color: var(--secondary-green); font-size: 1.2rem; }
+        
+        @keyframes slideIn { to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .nav-links a.hide-mobile { display: none; }
             .hero h1 { font-size: 2.5rem; }
         }
     </style>
@@ -153,10 +196,13 @@
                 <span class="logo-text">Compogreen</span>
             </div>
             <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#products">Products</a>
-                <a href="#learning">Learning & Blog</a>
-                <a href="#contact">Contact</a>
+                <a href="#about" class="hide-mobile">About</a>
+                <a href="#products" class="hide-mobile">Products</a>
+                <a href="#learning" class="hide-mobile">Learning</a>
+                <div class="cart-nav-btn" onclick="toggleCartModal()">
+                    <i class="fa-solid fa-cart-shopping"></i> Cart
+                    <span id="cartBadge" class="cart-badge">0</span>
+                </div>
             </div>
         </nav>
     </header>
@@ -266,8 +312,8 @@
 
                 <div class="learning-box">
                     <h3><i class="fa-solid fa-calendar-days"></i> Upcoming Events</h3>
-                    <p><strong>Compost Workshop </strong><br>Date: Sunday<br>Location: MSB Mazgaon</p>
-                    <p><strong>Organic Gardening Drive</strong><br>Date: End of Month<br>Location: MSB Mazgaon</p>
+                    <p><strong>Compost Workshop 101</strong><br>Date: Next Saturday<br>Location: School Greenhouse</p>
+                    <p><strong>Organic Gardening Drive</strong><br>Date: End of Month<br>Location: City Park</p>
                 </div>
             </div>
         </div>
@@ -288,7 +334,7 @@
             <p>Have questions about your plants? We are here to help!</p>
             <br>
             <p><i class="fa-solid fa-phone"></i> <strong>Phone:</strong> +91 7828049524</p>
-            <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> founderzahra@gmail.com</p>
+            <p><i class="fa-solid fa-envelope"></i> <strong>Email:</strong> zahraiscutiee@gmail.com</p>
             <p><i class="fa-solid fa-location-dot"></i> <strong>HQ:</strong> Compogreen Eco-Center</p>
         </div>
     </section>
@@ -296,6 +342,24 @@
     <footer>
         <p>&copy; 2026 Compogreen. All rights reserved. Grow the natural way.</p>
     </footer>
+
+    <div id="toast-container"></div>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-modal">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <span class="close-cart" onclick="toggleCartModal()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <p class="empty-cart-msg">Your cart is empty.</p>
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total">Total: <span id="cartTotal">₹0</span></div>
+                <button class="btn" style="width: 100%;" onclick="showToast('Proceeding to Checkout Demo!')">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
 
     <div class="chat-widget">
         <button class="chat-btn" onclick="toggleChat()">
@@ -325,14 +389,81 @@
     </div>
 
     <script>
-        // Add to Cart Functionality
-        function addToCart(productName, price, qtyId) {
-            const qty = document.getElementById(qtyId).value;
-            const total = price * qty;
-            alert(`Added ${qty}x ${productName} to your cart! \nTotal: ₹${total}\n(This is a demo for the Shark Tank pitch!)`);
+        // --- Custom Toast Notification Logic ---
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-leaf"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
         }
 
-        // Chat Widget Functionality
+        // --- Shopping Cart Logic ---
+        let cart = [];
+
+        function addToCart(productName, price, qtyId) {
+            const qty = parseInt(document.getElementById(qtyId).value);
+            if (qty > 0) {
+                // Check if item already exists in cart
+                const existingItem = cart.find(item => item.name === productName);
+                if (existingItem) {
+                    existingItem.qty += qty;
+                } else {
+                    cart.push({ name: productName, price: price, qty: qty });
+                }
+                updateCartUI();
+                showToast(`Added ${qty}x ${productName} to Cart!`);
+            }
+        }
+
+        function updateCartUI() {
+            const cartBody = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartBadge = document.getElementById('cartBadge');
+            
+            cartBody.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
+
+            if (cart.length === 0) {
+                cartBody.innerHTML = '<p class="empty-cart-msg">Your cart is empty.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    totalItems += item.qty;
+                    cartBody.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-details">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div>₹${item.price} x ${item.qty}</div>
+                                <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                            </div>
+                            <div><strong>₹${itemTotal}</strong></div>
+                        </div>
+                    `;
+                });
+            }
+
+            cartTotal.innerText = `₹${total}`;
+            cartBadge.innerText = totalItems;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartOverlay');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // --- Chat Widget Logic ---
         function toggleChat() {
             const chatBox = document.getElementById('chatBox');
             chatBox.style.display = chatBox.style.display === 'block' ? 'none' : 'block';
@@ -340,11 +471,8 @@
 
         function askFAQ(question) {
             appendMessage(question, 'user-msg');
-            
-            // Hide FAQs after asking
             document.getElementById('faqOptions').style.display = 'none';
 
-            // Simulate Bot Response
             setTimeout(() => {
                 let answer = "";
                 if(question === 'What is compost?') answer = "Compost is decomposed organic matter that is recycled as a fertilizer and soil amendment.";
@@ -376,7 +504,7 @@
             msgDiv.className = `chat-msg ${className}`;
             msgDiv.innerText = text;
             chatBody.appendChild(msgDiv);
-            chatBody.scrollTop = chatBody.scrollHeight; // Auto-scroll to bottom
+            chatBody.scrollTop = chatBody.scrollHeight; 
         }
     </script>
 </body>
